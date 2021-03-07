@@ -107,4 +107,23 @@ class copybook_page:
         document.save(self.filename)
         doc.add_page_break()
         
-# class arithmetic_exercise_page:
+def create_copybook_from_txt():
+    with open("wordlist.txt", 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    chinese_words = []
+    english_words = []
+    for line in lines:
+        word_pair = line.strip('\n').split(',')
+        chinese_words.append(word_pair[0].strip(' '))
+        english_words.append(word_pair[1].strip(' '))
+
+    doc = docx.Document()
+    copybook_obj_list = []
+    for words in zip(chinese_words, english_words):
+        copybook_page(*words).insert_to_document(doc)
+
+    convert("copybook.docx")
+    
+if __name__ == '__main__':
+    create_copybook_from_txt()
