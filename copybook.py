@@ -105,7 +105,7 @@ class copybook_page:
                         set_run_font(run,font_size,font_color=gray)
                         
         document.save(self.filename)
-        doc.add_page_break()
+        document.add_page_break()
         
 def create_copybook_from_txt():
     with open("wordlist.txt", 'r', encoding='utf-8') as f:
