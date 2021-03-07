@@ -1,7 +1,8 @@
 # chinese-copybook-for-children
 A Python mini-program for creating a Chinese copybook in docx file for children. The maximum allowed number of Chinese characters for one word is 10.
 
-Dependencies: packages `python-docx`, `google_trans_new`, `docx2pdf`
+Dependencies: packages `python-docx`, `google_trans_new`, `docx2pdf`.
+
 Install the packages with `pip install python-docx`, `pip install google_trans_new` and `pip install docx2pdf` in Anaconda.
 
 By running the Python code,  a copybook `copybook.docx` and its converted pdf file `copybook.pdf` will be created.
