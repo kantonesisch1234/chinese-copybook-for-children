@@ -1,5 +1,5 @@
 # chinese-copybook-for-children
-A Python mini-program for creating a Chinese copybook in docx file for children.
+A Python mini-program for creating a Chinese copybook in docx file for children. The maximum allowed number of Chinese characters for one word is 10.
 
 Example usage:
 ```
@@ -16,7 +16,7 @@ We can also read word pairs in a `.txt` file.
 Assume that you have a file `wordlist.txt` containing wordlists in the following format:
 ```
 星星, Star
-月亮, Moon,
+月亮, Moon
 太陽, Sun
 ```
 The Python code to read the file:
