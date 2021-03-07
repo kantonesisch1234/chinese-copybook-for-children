@@ -2,6 +2,7 @@ import docx
 from docx.shared import Pt, Cm
 from docx.oxml.ns import qn
 from docx.shared import RGBColor
+from google_trans_new import google_translator
 
 black = RGBColor(0, 0, 0)
 gray = RGBColor(220, 220, 220)
@@ -16,11 +17,13 @@ def set_run_font(run,size,english_font='Times New Roman',chinese_font=u'標楷�
     r.rPr.rFonts.set(qn('w:eastAsia'), chinese_font)
 
 class copybook_page:
-    def __init__(self, word, english_word):
+    def __init__(self, word, english_word, filename="copybook.docx", translate=True):
         assert len(word) <= 10
         self.word = word
         self.english_word = english_word
-        self.filename = "copybook.docx"
+        self.filename = filename
+        # If true, google translate will be used to translate it into different languages, by default German, French, Japanese and Russian
+        self.translate=True
     
     def insert_to_document(self, document):
         wordlen = len(self.word)
@@ -75,6 +78,19 @@ class copybook_page:
                 set_run_font(run,title_font_size)
                 if idx==1:
                     run.italic = True
+                    
+        if self.translate:
+            translator = google_translator()
+            title_cell_2 = table.rows[0].cells[column_no-1]
+            translation = '德文：'+translator.translate(self.english_word,lang_tgt='de').strip(' ')+'\n'
+            translation += '法文：'+translator.translate(self.english_word,lang_tgt='fr').strip(' ')+'\n'
+            translation += '日文：'+translator.translate(self.english_word,lang_tgt='ja').strip(' ')+'\n'
+            translation += '俄文：'+translator.translate(self.english_word,lang_tgt='ru').strip(' ')
+            title_cell_2.text = translation
+            paragraphs = title_cell_2.paragraphs
+            paragraphs[0].alignment = 1
+            run = paragraphs[0].runs[0]
+            set_run_font(run,16)
         
         row = table.rows[2]
 
@@ -90,3 +106,5 @@ class copybook_page:
                         
         document.save(self.filename)
         doc.add_page_break()
+        
+# class arithmetic_exercise_page:
