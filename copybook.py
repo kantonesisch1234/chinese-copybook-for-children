@@ -23,7 +23,7 @@ class copybook_page:
         self.english_word = english_word
         self.filename = filename
         # If true, google translate will be used to translate it into different languages, by default German, French, Japanese and Russian
-        self.translate=True
+        self.translate=translate
     
     def insert_to_document(self, document):
         wordlen = len(self.word)
@@ -78,7 +78,7 @@ class copybook_page:
                 set_run_font(run,title_font_size)
                 if idx==1:
                     run.italic = True
-                    
+
         if self.translate:
             translator = google_translator()
             title_cell_2 = table.rows[0].cells[column_no-1]
