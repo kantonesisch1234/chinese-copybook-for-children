@@ -1,6 +1,9 @@
 # chinese-copybook-for-children
 A Python mini-program for creating a Chinese copybook in docx file for children. The maximum allowed number of Chinese characters for one word is 10.
 
+Dependencies: package `python-docx`. 
+Install the package with `pip install python-docx` in Anaconda.
+
 Example usage:
 ```
 doc = docx.Document()
