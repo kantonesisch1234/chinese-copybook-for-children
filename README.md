@@ -36,3 +36,10 @@ copybook_obj_list = []
 for words in zip(chinese_words, english_words):
     copybook_page(*words).insert_to_document(doc)
 ```
+
+New features being worked on:
+* Automatic scraping of the first result of the word from Google image search and insert it to the upper right hand grid;
+* German translation of word;
+* English copybooks;
+* Automatic generation of random arithmetic exercises for children;
+* Automatic generation of mazes. 
