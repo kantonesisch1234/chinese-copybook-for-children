@@ -1,0 +1,3 @@
+星星, Star
+月亮, Moon
+太陽, Sun
