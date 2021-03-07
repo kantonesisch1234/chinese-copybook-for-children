@@ -1,58 +1,26 @@
 # chinese-copybook-for-children
 A Python mini-program for creating a Chinese copybook in docx file for children. The maximum allowed number of Chinese characters for one word is 10.
 
-Dependencies: packages `python-docx`, `google_trans_new`. 
-Install the packages with `pip install python-docx` and `pip install google_trans_new` in Anaconda.
+Dependencies: packages `python-docx`, `google_trans_new`, `docx2pdf`
+Install the packages with `pip install python-docx`, `pip install google_trans_new` and `pip install docx2pdf` in Anaconda.
 
-Example usage:
-```
-doc = docx.Document()
-word_list = ["星星", "月亮", "太陽"]
-eng_word_list = ["Star", "Moon", "Sun"]
-copybook_obj_list = []
-for words in zip(word_list, eng_word_list):
-    copybook_page(*words).insert_to_document(doc)
-```
-This will create a copybook in `copybook.docx`.
+By running the Python code,  a copybook `copybook.docx` and its converted pdf file `copybook.pdf` will be created.
 
-We can also read word pairs in a `.txt` file.
-Assume that you have a file `wordlist.txt` containing wordlists in the following format:
+The word list can be read by a text file.
+It is assumed that you have a file `wordlist.txt` containing wordlists in the following format:
 ```
 星星, Star
 月亮, Moon
 太陽, Sun
 ```
-The Python code to read the file:
-```
-with open("wordlist.txt", 'r', encoding='utf-8') as f:
-    lines = f.readlines()
-    
-chinese_words = []
-english_words = []
-for line in lines:
-    word_pair = line.strip('\n').split(',')
-    chinese_words.append(word_pair[0].strip(' '))
-    english_words.append(word_pair[1].strip(' '))
 
-doc = docx.Document()
-copybook_obj_list = []
-for words in zip(chinese_words, english_words):
-    copybook_page(*words).insert_to_document(doc)
-```
-
-You can as well convert it into a pdf file.
-```
-from docx2pdf import convert
-convert("copybook.docx")
-```
-
-You may want to remove translations to languages other than English, because Google Translation sometimes really sucks. Just assign `false` to the keyword argument `translate` while creating `copybook_page` object. 
+You may want to remove translations to languages other than English, because Google Translation sometimes really sucks. Just change the code and assign `false` to the keyword argument `translate` while creating `copybook_page` object. 
 ```
 copybook_page(*words, translate=false).insert_to_document(doc)
 ```
 
 New features being worked on:
-* Automatic scraping of the first result of the word from Google image search and insert it to the upper right hand grid;
+* Automatic scraping of the first result of the word from Google image search and insert it to the document file (hard if API is not used because Google tried hard to stop us from scraping it ourselves)
 * English copybooks;
 * Automatic generation of random arithmetic exercises for children;
-* Automatic generation of mazes. 
+* Automatic generation of maze games from children. 
