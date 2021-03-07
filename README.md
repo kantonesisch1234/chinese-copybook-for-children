@@ -37,6 +37,12 @@ for words in zip(chinese_words, english_words):
     copybook_page(*words).insert_to_document(doc)
 ```
 
+You can as well convert it into a pdf file.
+```
+from docx2pdf import convert
+convert("copybook.docx")
+```
+
 New features being worked on:
 * Automatic scraping of the first result of the word from Google image search and insert it to the upper right hand grid;
 * German translation of word;
