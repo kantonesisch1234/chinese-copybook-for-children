@@ -26,4 +26,4 @@ New features being worked on:
 * Automatic generation of random arithmetic exercises for children;
 * Automatic generation of maze games from children. 
 
-This program is originally meant to write for someone who has no programming knowledge at all, such that they can complete everything in one click, so flexibility is basically not taken into consideration. 
+This program is originally meant to be written for someone who has no programming knowledge at all, such that they can complete everything in one click, so flexibility is basically not taken into account. 
