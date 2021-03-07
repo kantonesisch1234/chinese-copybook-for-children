@@ -15,7 +15,7 @@ It is assumed that you have a file `wordlist.txt` containing wordlists in the fo
 太陽, Sun
 ```
 
-You may want to remove translations to languages other than English, because Google Translation sometimes really sucks. Just change the code and assign `false` to the keyword argument `translate` while creating `copybook_page` object. 
+You may want to remove translations to languages other than English, because Google Translation sometimes just really sucks. Just change the code and assign `false` to the keyword argument `translate` while creating `copybook_page` object. 
 ```
 copybook_page(*words, translate=false).insert_to_document(doc)
 ```
