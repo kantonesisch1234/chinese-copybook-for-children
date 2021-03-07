@@ -1,5 +1,5 @@
 # chinese-copybook-for-children
-A Python mini-program for creating a Chinese copybook in docx file for children. The maximum allowed number of Chinese characters for one word is 10.
+A Python mini-program for creating a Chinese copybook in docx and pdf files for children. The maximum allowed number of Chinese characters for one word is 10.
 
 Dependencies: packages `python-docx`, `google_trans_new`, `docx2pdf`.
 
@@ -25,3 +25,5 @@ New features being worked on:
 * English copybooks;
 * Automatic generation of random arithmetic exercises for children;
 * Automatic generation of maze games from children. 
+
+This program is originally meant to write for someone who has no programming knowledge at all, such that they can complete everything in one click, so flexibility is basically not taken into consideration. 
