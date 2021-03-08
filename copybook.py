@@ -27,7 +27,7 @@ class copybook_page:
         assert len(word) <= 10
         self.word = word
         self.english_word = english_word
-        self.mode = mode
+        self.mode = mode    # input from command line, "-t" is translation mode and "-p" is picture inserting mode  
         self.filename = filename
         
     def __download_image_from_word(self):
