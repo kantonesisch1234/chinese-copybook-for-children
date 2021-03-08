@@ -3,7 +3,7 @@ A Python mini-program for creating a Chinese copybook in docx and pdf files for 
 
 Dependencies: packages `python-docx`, `google_trans_new`, `docx2pdf`, `bs4`, `requests`.
 
-In case you haven't installed these packages, install them with `pip install ` + package name, e.g. `pip install python-docx`.
+In case you haven't installed these packages, install them with `pip install ` + package name, e.g. `pip install python-docx`, or simply execute the batch file `install_dependencies.bat`.
 
 There are two modes: the translation mode and the picture mode. The translation mode inserts multilingual translation of the word in the cell in the upper right hand corner of a copybook page; the picture mode inserts the corresponding picture in that cell. The pictures are directly scraped from Yahoo image search after queries are sent to the search engine.
 
