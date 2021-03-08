@@ -49,32 +49,35 @@ class copybook_page:
     def insert_to_document(self, document):
         wordlen = len(self.word)
         
-        cell_dim_list = [(7,7), (9,8), (7,6), (9,8), (13,10), (7,6), 
-                         (7,7), (9,8), (9,9), (13,10)]
-        cell_size_list = [(2.5,2.5), (2,2), (2.5,2.5), (2,2), (1.5,1.5), (2.5,2.5), (2.5,2.5), (2,2), (2,2), (1.5,1.5)]
+        cell_dim_list = [(7,7), (7,6), (7,6), (7,8), (7,5), 
+                         (7,6), (7,7), (9,8), (9,9), (13,10)]
+        cell_size_list = [(2.5,2.5), (2.5,2.5), (2.5,2.5), (2.3,2.3), (2.5,2.5),
+                          (2.5,2.5), (2.5,2.5), (2,2), (2,2), (1.5,1.5)]
         title_font_size_list = [36, 36, 36, 36, 32, 32, 24, 24, 24, 20]
         translation_font_size_list = [16,16,16,12,12,12,10,10,10,10]
-        font_size_list = [52, 42, 52, 42, 32, 52, 52, 42, 36, 36]
+        font_size_list = [52, 52, 52, 48, 52, 52, 52, 42, 36, 36]
         merge_cell_list = [[(0,0),(1,2),(0,3),(1,6)],
-                          [(0,0),(1,3),(0,4),(1,7)],
+                          [(0,0),(1,2),(0,3),(1,5)],
                           [(0,0),(1,2),(0,3),(1,5)],
                           [(0,0),(1,3),(0,4),(1,7)],
-                          [(0,0),(1,4),(0,5),(1,9)],
+                          [(0,0),(1,1),(0,2),(1,4)],
                           [(0,0),(1,2),(0,3),(1,5)],
                           [(0,0),(1,2),(0,3),(1,6)],
                           [(0,0),(1,3),(0,4),(1,7)],
                           [(0,0),(1,4),(0,5),(1,8)],
                           [(0,0),(1,4),(0,5),(1,9)]]
 
+        pic_width = 2
+
         cell_dim = cell_dim_list[wordlen-1]
         cell_size = cell_size_list[wordlen-1]
         title_font_size = title_font_size_list[wordlen-1]
         font_size = font_size_list[wordlen-1]
         
-        pic_width = 2
-
         cell_height, cell_width = cell_size
         row_no, column_no = cell_dim
+        
+        write_repetition = int(column_no/wordlen)
                 
         table = document.add_table(rows=row_no, cols=column_no, style='Table Grid')
 
@@ -135,13 +138,14 @@ class copybook_page:
                 
         row = table.rows[2]
 
-        for idx,char in enumerate(self.word):
+        for idx,char in enumerate(self.word*write_repetition):
             row.cells[idx].text = char
         
         for row in table.rows[2:]:
             for cell in row.cells:
                 paragraphs = cell.paragraphs
                 for paragraph in paragraphs:
+                    paragraph.alignment = 1
                     for run in paragraph.runs:
                         set_run_font(run,font_size,font_color=gray)
                         
