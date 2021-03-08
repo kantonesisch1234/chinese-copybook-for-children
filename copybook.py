@@ -49,8 +49,8 @@ class copybook_page:
     def insert_to_document(self, document):
         wordlen = len(self.word)
         
-        cell_dim_list = [(8,7), (10,8), (8,6), (10,8), (14,10), (8,6), 
-                         (8,7), (10,8), (10,9), (14,10)]
+        cell_dim_list = [(7,7), (9,8), (7,6), (9,8), (13,10), (7,6), 
+                         (7,7), (9,8), (9,9), (13,10)]
         cell_size_list = [(2.5,2.5), (2,2), (2.5,2.5), (2,2), (1.5,1.5), (2.5,2.5), (2.5,2.5), (2,2), (2,2), (1.5,1.5)]
         title_font_size_list = [36, 36, 36, 36, 32, 32, 24, 24, 24, 20]
         translation_font_size_list = [16,16,16,12,12,12,10,10,10,10]
@@ -71,7 +71,7 @@ class copybook_page:
         title_font_size = title_font_size_list[wordlen-1]
         font_size = font_size_list[wordlen-1]
         
-        pic_width = 2.5
+        pic_width = 2
 
         cell_height, cell_width = cell_size
         row_no, column_no = cell_dim
