@@ -123,11 +123,15 @@ class copybook_page:
             paragraphs[0].alignment = 1
             run = paragraphs[0].runs[0]
             
-            self.__download_image_from_word()
-            pic_dir = "pics/"+self.word+".jpg"
-            if not os.path.exists(pic_dir):
-                return 0    # skip inserting the picture if picture download not successful
-            inline_shape = run.add_picture(pic_dir,width=Inches(pic_width))
+            try:
+                self.__download_image_from_word()
+                pic_dir = "pics/"+self.word+".jpg"
+                if not os.path.exists(pic_dir):
+                    return 0    # skip inserting the picture if picture download not successful
+                inline_shape = run.add_picture(pic_dir,width=Inches(pic_width))
+            except Exception as e:
+                print(e)
+                print("Error occured at the word " + self.word + ".")
                 
         row = table.rows[2]
 
