@@ -1,9 +1,14 @@
 import docx 
-from docx.shared import Pt, Cm
+from docx.shared import Pt, Cm, Inches
 from docx.oxml.ns import qn
 from docx.shared import RGBColor
 from google_trans_new import google_translator
 from docx2pdf import convert
+import requests
+from bs4 import BeautifulSoup
+import json
+import os
+import sys
 
 black = RGBColor(0, 0, 0)
 gray = RGBColor(220, 220, 220)
@@ -18,13 +23,27 @@ def set_run_font(run,size,english_font='Times New Roman',chinese_font=u'標楷�
     r.rPr.rFonts.set(qn('w:eastAsia'), chinese_font)
 
 class copybook_page:
-    def __init__(self, word, english_word, filename="copybook.docx", translate=True):
+    def __init__(self, word, english_word, mode, filename="copybook.docx"):
         assert len(word) <= 10
         self.word = word
         self.english_word = english_word
+        self.mode = mode
         self.filename = filename
-        # If true, google translate will be used to translate it into different languages, by default German, French, Japanese and Russian
-        self.translate=translate
+        
+    def __download_image_from_word(self):
+        url = "https://images.search.yahoo.com/search/images?p=" + self.word
+
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        img_link = json.loads(soup.find("div", class_="sres-cntr").find("li")['data'])['iurl']
+        
+        if not os.path.exists('pics'):
+            os.makedirs('pics')
+
+        response = requests.get(img_link)
+        file = open("pics/"+self.word+".jpg" , "wb")
+        file.write(response.content)
+        file.close()
     
     def insert_to_document(self, document):
         wordlen = len(self.word)
@@ -50,6 +69,8 @@ class copybook_page:
         cell_size = cell_size_list[wordlen-1]
         title_font_size = title_font_size_list[wordlen-1]
         font_size = font_size_list[wordlen-1]
+        
+        pic_width = 2.5
 
         cell_height, cell_width = cell_size
         row_no, column_no = cell_dim
@@ -81,7 +102,7 @@ class copybook_page:
                 if idx==1:
                     run.italic = True
 
-        if self.translate:
+        if self.mode == '-t':
             translator = google_translator()
             title_cell_2 = table.rows[0].cells[column_no-1]
             translation = '德文：'+translator.translate(self.english_word,lang_src='en',lang_tgt='de').strip(' ')+'\n'
@@ -94,6 +115,19 @@ class copybook_page:
             run = paragraphs[0].runs[0]
             set_run_font(run,translation_font_size_list[wordlen-1])
         
+        if self.mode == '-p':
+            title_cell_2 = table.rows[0].cells[column_no-1]
+            paragraphs = title_cell_2.paragraphs
+            run = paragraphs[0].add_run()
+            paragraphs[0].alignment = 1
+            run = paragraphs[0].runs[0]
+            
+            self.__download_image_from_word()
+            pic_dir = "pics/"+self.word+".jpg"
+            if not os.path.exists(pic_dir):
+                return 0    # skip inserting the picture if picture download not successful
+            inline_shape = run.add_picture(pic_dir,width=Inches(pic_width))
+                
         row = table.rows[2]
 
         for idx,char in enumerate(self.word):
@@ -123,9 +157,10 @@ def create_copybook_from_txt():
     doc = docx.Document()
     copybook_obj_list = []
     for words in zip(chinese_words, english_words):
-        copybook_page(*words).insert_to_document(doc)
+        copybook_page(*words,sys.argv[1]).insert_to_document(doc)
 
     convert("copybook.docx")
     
 if __name__ == '__main__':
     create_copybook_from_txt()
+    shutil.rmtree("pics")
