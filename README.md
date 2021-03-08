@@ -18,7 +18,7 @@ The picture mode:
 python copybook.py -p
 ```
 
-To make the execution of the code even easier, .bat files are included in the repository. The code can be executed directly by clicking on it.
+To make the execution of the code even easier, batch files are included in the repository. The code can be executed directly by clicking on it.
 
 By running the Python code,  a copybook `copybook.docx` and its converted pdf file `copybook.pdf` will be created.
 
