@@ -3,6 +3,7 @@ from docx.shared import Pt, Cm
 from docx.oxml.ns import qn
 from docx.shared import RGBColor
 from google_trans_new import google_translator
+from docx2pdf import convert
 
 black = RGBColor(0, 0, 0)
 gray = RGBColor(220, 220, 220)
@@ -31,7 +32,8 @@ class copybook_page:
         cell_dim_list = [(8,7), (10,8), (8,6), (10,8), (14,10), (8,6), 
                          (8,7), (10,8), (10,9), (14,10)]
         cell_size_list = [(2.5,2.5), (2,2), (2.5,2.5), (2,2), (1.5,1.5), (2.5,2.5), (2.5,2.5), (2,2), (2,2), (1.5,1.5)]
-        title_font_size_list = [42, 42, 42, 36, 32, 32, 24, 24, 24, 20]
+        title_font_size_list = [36, 36, 36, 36, 32, 32, 24, 24, 24, 20]
+        translation_font_size_list = [16,16,16,12,12,12,10,10,10,10]
         font_size_list = [52, 42, 52, 42, 32, 52, 52, 42, 36, 36]
         merge_cell_list = [[(0,0),(1,2),(0,3),(1,6)],
                           [(0,0),(1,3),(0,4),(1,7)],
@@ -82,15 +84,15 @@ class copybook_page:
         if self.translate:
             translator = google_translator()
             title_cell_2 = table.rows[0].cells[column_no-1]
-            translation = '德文：'+translator.translate(self.english_word,lang_tgt='de').strip(' ')+'\n'
-            translation += '法文：'+translator.translate(self.english_word,lang_tgt='fr').strip(' ')+'\n'
-            translation += '日文：'+translator.translate(self.english_word,lang_tgt='ja').strip(' ')+'\n'
-            translation += '俄文：'+translator.translate(self.english_word,lang_tgt='ru').strip(' ')
+            translation = '德文：'+translator.translate(self.english_word,lang_src='en',lang_tgt='de').strip(' ')+'\n'
+            translation += '法文：'+translator.translate(self.english_word,lang_src='en',lang_tgt='fr').strip(' ')+'\n'
+            translation += '日文：'+translator.translate(self.english_word,lang_src='en',lang_tgt='ja').strip(' ')+'\n'
+            translation += '俄文：'+translator.translate(self.english_word,lang_src='en',lang_tgt='ru').strip(' ')
             title_cell_2.text = translation
             paragraphs = title_cell_2.paragraphs
             paragraphs[0].alignment = 1
             run = paragraphs[0].runs[0]
-            set_run_font(run,16)
+            set_run_font(run,translation_font_size_list[wordlen-1])
         
         row = table.rows[2]
 
