@@ -33,17 +33,21 @@ class copybook_page:
         
     def __download_image_from_word(self, attempts=10):
         url = "https://images.search.yahoo.com/search/images?p=" + self.word
-
+        
+        # Scrape image from yahoo image search
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
         div_list = soup.find("div", class_="sres-cntr").find_all("li")
+        
+        # Get a list of image links with a maximum specified number
         img_links_length = max(attempts, len(div_list))
         img_links = [json.loads(div_list[i]['data'])['iurl'] for i in range(img_links_length)]
         img_file_type = '.jpg'
 
         if not os.path.exists('pics'):
             os.makedirs('pics')
-        
+            
+        # Return error and try to download the next image if download failed
         for idx,img_link in enumerate(img_links):
             try:
                 response = requests.get(img_link)
@@ -54,6 +58,8 @@ class copybook_page:
                 break
             except Exception as e:
                 print("Error downloading image for " + self.word +".")
+                if idx == img_links_length-1:
+                    print("Image downloading failed even after maximum number of attempts. The cell for image will remain blank.")
             
     
     def insert_to_document(self, document):
