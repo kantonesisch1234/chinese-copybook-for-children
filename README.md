@@ -29,8 +29,6 @@ It is assumed that you have a file `wordlist.txt` containing wordlists in the fo
 月亮, Moon
 太陽, Sun
 ```
-Bugs to be fixed:
-* The image download fails for some queries and the program crashes. I will try to fix it by letting the program to download another picture or at least leave the cell empty rather than letting the program to crash.
 
 New features being worked on:
 * English copybooks;
