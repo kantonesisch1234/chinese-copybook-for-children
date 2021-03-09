@@ -32,7 +32,7 @@ class copybook_page:
         self.filename = filename
         
     def __download_image_from_word(self, attempts=10):
-        url = "https://images.search.yahoo.com/search/images?p=" + self.word
+        url = "https://hk.images.search.yahoo.com/search/images?p=" + self.word
         
         # Scrape image from yahoo image search
         response = requests.get(url)
