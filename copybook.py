@@ -40,7 +40,7 @@ class copybook_page:
         div_list = soup.find("div", class_="sres-cntr").find_all("li")
         
         # Get a list of image links with a maximum specified number
-        img_links_length = max(attempts, len(div_list))
+        img_links_length = min(attempts, len(div_list))
         img_links = [json.loads(div_list[i]['data'])['iurl'] for i in range(img_links_length)]
         img_file_type = '.jpg'
 
