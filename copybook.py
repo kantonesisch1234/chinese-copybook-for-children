@@ -31,20 +31,30 @@ class copybook_page:
         self.mode = mode       # input from command line, "-t" is translation mode and "-p" is picture inserting mode  
         self.filename = filename
         
-    def __download_image_from_word(self):
+    def __download_image_from_word(self, attempts=10):
         url = "https://images.search.yahoo.com/search/images?p=" + self.word
 
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
-        img_link = json.loads(soup.find("div", class_="sres-cntr").find("li")['data'])['iurl']
-        
+        div_list = soup.find("div", class_="sres-cntr").find_all("li")
+        img_links_length = max(attempts, len(div_list))
+        img_links = [json.loads(div_list[i]['data'])['iurl'] for i in range(img_links_length)]
+        img_file_type = '.jpg'
+
         if not os.path.exists('pics'):
             os.makedirs('pics')
-
-        response = requests.get(img_link)
-        file = open("pics/"+self.word+".jpg" , "wb")
-        file.write(response.content)
-        file.close()
+        
+        for idx,img_link in enumerate(img_links):
+            try:
+                response = requests.get(img_link)
+                file = open("pics/"+self.word+img_file_type , "wb")
+                file.write(response.content)
+                file.close()
+                print("Image downloading for " + self.word + " successful at " + str(idx+1) +". attempt.")
+                break
+            except Exception as e:
+                print("Error downloading image for " + self.word +".")
+            
     
     def insert_to_document(self, document):
         wordlen = len(self.word)
