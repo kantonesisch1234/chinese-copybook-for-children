@@ -36,3 +36,5 @@ New features being worked on:
 * Automatic generation of maze games from children. 
 
 This program is originally meant to be written for someone who has no programming knowledge at all, such that they can complete everything in one click, so flexibility is basically not taken into account. 
+
+p.s. The code `download_images.py` is for direct downloading of images by scraping Yahoo image search without creating copybook documents. 
